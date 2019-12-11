@@ -30,6 +30,7 @@ class ServerProtocol(LineOnlyReceiver):
                 
                 if self.LoginOccupied(NewLogin):
                     self.sendLine("Login is already occupied. Please, choose another one.".encode())
+                    self.factory.clients.remove(self)
                 else:
                     self.login=NewLogin
                     self.sendLine(str("Welcome, " + self.login + "!").encode()) 
