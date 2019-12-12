@@ -21,9 +21,8 @@ class ServerProtocol(LineOnlyReceiver):
                 self.factory.last_ten_messages.pop(0)
                 self.factory.last_ten_messages.append(content.encode())
 
-            for user in self.factory.clients:                
-                if user is not self:                    
-                    user.sendLine(content.encode())
+            for user in self.factory.clients:
+                user.sendLine(content.encode())
         else:
             if content.startswith("login:"):
                 NewLogin=content.replace("login:","")
@@ -33,6 +32,7 @@ class ServerProtocol(LineOnlyReceiver):
                     self.factory.clients.remove(self)
                 else:
                     self.login=NewLogin
+                    self.factory.clients.append(self)
                     self.sendLine(str("Welcome, " + self.login + "!").encode()) 
                     self.send_history()
             else:
