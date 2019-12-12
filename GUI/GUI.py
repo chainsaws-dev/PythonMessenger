@@ -1,9 +1,9 @@
 import sys
 from PyQt5 import QtWidgets
-from ClientForm import Ui_MainWindow
+from GUI import ClientForm
 
 
-class ChatWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+class ChatWindow(QtWidgets.QMainWindow, ClientForm):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
