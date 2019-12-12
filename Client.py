@@ -1,5 +1,5 @@
 import sys
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from GUI import ClientForm
 
 from twisted.internet.protocol import ClientFactory
@@ -45,6 +45,11 @@ class ChatWindow(QtWidgets.QMainWindow, ClientForm.Ui_MainWindow):
         #self.chat_window_text.appendPlainText(message)
         self.protocol.sendLine(message.encode())
         self.text_to_send.setText('')
+
+    def keyPressEvent(self, e):
+        
+        if e.key() == QtCore.Qt.Key_Enter or e.key() == QtCore.Qt.Key_Return:
+            self.send_message()
 
 
 
