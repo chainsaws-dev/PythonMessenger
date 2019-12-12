@@ -7,7 +7,7 @@ class ServerProtocol(LineOnlyReceiver):
     login: str = None
 
     def connectionMade(self):
-        self.factory.clients.append(self)
+        self.sendLine(str("Welcome, please login by entering: login:<your_login>").encode())         
 
     def lineReceived(self, line: bytes):
         content = line.decode()
@@ -31,8 +31,8 @@ class ServerProtocol(LineOnlyReceiver):
                     self.sendLine("Login is already occupied. Please, choose another one.".encode())
                     self.factory.clients.remove(self)
                 else:
-                    self.login=NewLogin
-                    self.factory.clients.append(self)
+                    self.login=NewLogin 
+                    self.factory.clients.append(self)                   
                     self.sendLine(str("Welcome, " + self.login + "!").encode()) 
                     self.send_history()
             else:
