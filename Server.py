@@ -29,7 +29,7 @@ class ServerProtocol(LineOnlyReceiver):
                 
                 if self.LoginOccupied(NewLogin):
                     self.sendLine("Login is already occupied. Please, choose another one.".encode())
-                    self.factory.clients.remove(self)
+                    self.connectionLost()
                 else:
                     self.login=NewLogin 
                     self.factory.clients.append(self)                   
@@ -38,7 +38,11 @@ class ServerProtocol(LineOnlyReceiver):
             else:
                 self.sendLine("Invalid login! Please write login:<yourlogin>".encode())   
     def connectionLost(self,reason=connectionDone):
-        self.factory.clients.remove(self)
+        self.sendLine("Disconnected from server.".encode())
+        try:
+            self.factory.clients.remove(self)
+        except:
+            print("Client not found")            
 
     def LoginOccupied(self, NewLogin):
         for user in self.factory.clients:
