@@ -37,12 +37,11 @@ class ServerProtocol(LineOnlyReceiver):
                     self.send_history()
             else:
                 self.sendLine("Invalid login! Please write login:<yourlogin>".encode())   
-    def connectionLost(self,reason=connectionDone):
-        self.sendLine("Disconnected from server.".encode())
+    def connectionLost(self,reason=connectionDone):        
         try:
             self.factory.clients.remove(self)
         except:
-            print("Client not found")            
+            print(str(reason))            
 
     def LoginOccupied(self, NewLogin):
         for user in self.factory.clients:

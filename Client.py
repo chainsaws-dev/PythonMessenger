@@ -24,11 +24,11 @@ class Connector(ClientFactory):
         self.window = app_window
 
     def clientConnectionLost(self, connector, reason):    
-        self.window.chat_window_text.appendPlainText(str('Lost connection.'))          
+        self.window.chat_window_text.appendPlainText(str('Соединение утеряно.'))          
 
     def clientConnectionFailed(self, connector, reason):
-        self.window.chat_window_text.appendPlainText(str('Connection failed.'))   
-        
+        self.window.chat_window_text.appendPlainText(str('Соединиться не удалось.'))   
+
 class ChatWindow(QtWidgets.QMainWindow, ClientForm.Ui_MainWindow):
     protocol: ConnectorProtocol
     reactor = None
